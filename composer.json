@@ -1,0 +1,6 @@
+{
+    "require": {
+        "longman/telegram-bot": "^0.83.1",
+        "php": "^8.0"
+    }
+}

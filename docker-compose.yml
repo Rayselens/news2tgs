@@ -1,0 +1,38 @@
+version: "3.9"
+ 
+services:
+    news:
+        container_name: news2tg_news
+        image: apache
+        restart: always
+        build: 
+            context: .
+            dockerfile: Dockerfile
+            target: base
+        ports:
+            - "${PORT_news}:80"
+        environment:
+            bot_token: "${bot_token}"
+            channel_id: "${chat_id}"
+            db_host: "${db_host}"
+            db_port: "${PORT_db}"
+            db_name: "${db_name}"
+            db_user: "${db_user}"
+            db_password: "${db_password}"
+
+
+    db:
+        container_name: news2tg_db
+        image: postgres
+        restart: always
+        build:
+            context: .
+            dockerfile: db_Dockerfile.dockerfile
+        environment:
+            POSTGRES_USER: "${db_user}"
+            POSTGRES_PASSWORD: "${db_password}"
+            POSTGRES_DB: "${db_name}"
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        ports:
+            - "${PORT_db}:5432"
